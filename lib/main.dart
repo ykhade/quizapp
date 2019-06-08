@@ -1,9 +1,7 @@
 import 'dart:math';
-import 'dart:ui' as prefix0;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'dart:io' show Platform;
 
 void main() => runApp(MyApp());
 
