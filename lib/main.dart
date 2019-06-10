@@ -1,50 +1,53 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:async';
 
-void main() {
-  runApp(CupertinoApp(
-    title: 'Navigation Basics',
-    home: FirstRoute(),
-  ));
-}
+void main() => runApp(MyApp());
 
-class FirstRoute extends StatelessWidget {
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(
-        middle: Text("First Route"),
-      ),
-      child: Center(
-          child: CupertinoButton.filled(
-        child: Text('Open Route'),
-        onPressed: () {
-          Navigator.push(
-            context,
-            CupertinoPageRoute(builder: (context) => SecondRoute()),
-          );
-        },
-      )),
+    return MaterialApp(
+      home: HomeScreen(),
     );
   }
 }
 
-class SecondRoute extends StatelessWidget {
+class HomeScreen extends StatelessWidget {
+  final Firestore db = Firestore.instance;
+
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(
-        backgroundColor: Colors.red,
-        middle: Text('Second Route'),
-      ),
-      child: Center(
-        child: CupertinoButton.filled(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: Text('Go Back!'),
-        ),
-      ),
+    return Scaffold(
+        appBar: AppBar(title: Text('Home')),
+        body: Center(
+          child: StreamBuilder<DocumentSnapshot>(
+              stream: db.collection('users').document('HXaJwWViNggX0K7o2Onm').snapshots(),
+              builder: (context, snapshot) {
+
+                if (snapshot.hasData) {
+
+                  var data = snapshot.data.data;
+
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+
+                      Image.network(data['photoURL']),
+                      Text(data['username'], style: Theme.of(context).textTheme.display1,),
+
+
+                    ],
+                  );
+                } else {
+                  return Container();
+                }
+
+
+              }
+          ),
+        )
     );
   }
 }
