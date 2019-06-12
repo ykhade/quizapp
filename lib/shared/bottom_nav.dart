@@ -9,19 +9,19 @@ class AppBottomNav extends StatelessWidget {
         BottomNavigationBarItem(
             icon: Icon(
               FontAwesomeIcons.graduationCap,
-              size: 50,
+              size: 20,
             ),
             title: Text('Topics')),
         BottomNavigationBarItem(
             icon: Icon(
-              FontAwesomeIcons.graduationCap,
-              size: 50,
+              FontAwesomeIcons.bolt,
+              size: 20,
             ),
             title: Text('About')),
         BottomNavigationBarItem(
             icon: Icon(
-              FontAwesomeIcons.graduationCap,
-              size: 50,
+              FontAwesomeIcons.userCircle,
+              size: 20,
             ),
             title: Text('Profile')),
       ].toList(),
