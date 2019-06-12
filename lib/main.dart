@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'dart:async';
+import 'package:firebase_analytics/observer.dart';
+import 'services/services.dart';
+import 'screens/screens.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+
 
 void main() => runApp(MyApp());
 
@@ -8,46 +11,35 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: HomeScreen(),
-    );
-  }
-}
+      // Firebase Analytics
+      navigatorObservers: [
+        FirebaseAnalyticsObserver(analytics: FirebaseAnalytics()),
+      ],
 
-class HomeScreen extends StatelessWidget {
-  final Firestore db = Firestore.instance;
+      // Named Routes
+      routes: {
+        '/': (context) => LoginScreen(),
+        '/topics': (context) => TopicsScreen(),
+        '/profile': (context) => ProfileScreen(),
+        '/about': (context) => AboutScreen(),
+      },
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(title: Text('Home')),
-        body: Center(
-          child: StreamBuilder<DocumentSnapshot>(
-              stream: db.collection('users').document('HXaJwWViNggX0K7o2Onm').snapshots(),
-              builder: (context, snapshot) {
-
-                if (snapshot.hasData) {
-
-                  var data = snapshot.data.data;
-
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-
-                      Image.network(data['photoURL']),
-                      Text(data['username'], style: Theme.of(context).textTheme.display1,),
-
-
-                    ],
-                  );
-                } else {
-                  return Container();
-                }
-
-
-              }
-          ),
-        )
+      // Theme
+      theme: ThemeData(
+        fontFamily: 'Nunito',
+        bottomAppBarTheme: BottomAppBarTheme(
+          color: Colors.black87,
+        ),
+        brightness: Brightness.dark,
+        textTheme: TextTheme(
+          body1: TextStyle(fontSize: 18),
+          body2: TextStyle(fontSize: 16),
+          button: TextStyle(letterSpacing: 1.5, fontWeight: FontWeight.bold),
+          headline: TextStyle(fontWeight: FontWeight.bold),
+          subhead: TextStyle(color: Colors.grey),
+        ),
+        buttonTheme: ButtonThemeData(),
+      ),
     );
   }
 }
