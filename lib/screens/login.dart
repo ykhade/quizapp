@@ -14,7 +14,7 @@ class LoginScreenState extends State<LoginScreen> {
   void initState() {
     super.initState();
     auth.getUser.then(
-          (user) {
+      (user) {
         if (user != null) {
           Navigator.pushReplacementNamed(context, '/topics');
         }
