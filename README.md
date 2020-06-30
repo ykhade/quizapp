@@ -8,7 +8,7 @@ Firebase as the backend and storage solution makes it very easy to scale and cha
 ## Getting Started
 
 This project is a starting point for a Flutter application.
-Clone this repository, with VSCode or Android Studio then download the Flutter tools. 
+Clone this repository, with VSCode or Android Studio then download the Flutter tools. Note you will need to provide your own generated GCP or AWS keys for the services listed in `ios/Runner/GoogleService-Info.plist` 
 ```aidl
 $ git clone 
 $ cd quizapp
